@@ -20,49 +20,42 @@ export default async function NewTransactionPage() {
 
     return (
         <div className="pt-6">
-            <Card>
+            <Card className="bg-white/5 border-white/10 backdrop-blur-md text-white">
                 <CardHeader>
-                    <CardTitle>New Transaction</CardTitle>
+                    <CardTitle className="text-xl font-bold">Nova Transacció</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <form action={createTransaction} className="space-y-4">
                         <div className="space-y-2">
-                            <Label>Type</Label>
-                            <select name="type" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                                <option value="expense">Expense (Salida)</option>
-                                <option value="income">Income (Entrada)</option>
+                            <Label className="text-gray-300">Tipus</Label>
+                            <select name="type" className="flex h-10 w-full rounded-md border border-white/10 bg-black/50 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                <option value="expense" className="bg-gray-900 text-white">Despesa (Eixida)</option>
+                                <option value="income" className="bg-gray-900 text-white">Ingrés (Entrada)</option>
                             </select>
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Amount</Label>
-                            <Input name="amount" type="number" step="0.01" required />
+                            <Label className="text-gray-300">Quantitat (€)</Label>
+                            <Input name="amount" type="number" step="0.01" placeholder="0.00" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Description</Label>
-                            <Input name="description" placeholder="Electricity bill, Monthly quota..." required />
+                            <Label className="text-gray-300">Descripció</Label>
+                            <Input name="description" placeholder="Ex: Factura llum, Quota mensual..." required className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                         </div>
 
-                        {/* Logic: If Income, select Payer. If Expense, Payer is null or 'System'? Actually Schema says payer_id refs profiles. For Expense, who paid? Maybe the treasurer from the pot? Or if a user paid for something and needs reimbursement?
-                        Let's assume:
-                        - Income: Payer = User who paid.
-                        - Expense: Payer = Null (paid from funds) OR Payer = User who paid and needs reimbursement?
-                        Schema: type transaction_type ('income', 'expense'). payer_id references profiles.
-                        Simplification: Income -> Payer required. Expense -> Payer optional (if tracking who spent it).
-                    */}
                         <div className="space-y-2">
-                            <Label>Payer (Who paid?)</Label>
-                            <select name="payer_id" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-                                <option value="">-- None (Common Fund) --</option>
+                            <Label className="text-gray-300">Pagador (Qui ha pagat?)</Label>
+                            <select name="payer_id" className="flex h-10 w-full rounded-md border border-white/10 bg-black/50 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                <option value="" className="bg-gray-900 text-gray-400">-- Cap (Caixa Comuna) --</option>
                                 {users?.map((u: any) => (
-                                    <option key={u.id} value={u.id}>{u.full_name}</option>
+                                    <option key={u.id} value={u.id} className="bg-gray-900 text-white">{u.full_name}</option>
                                 ))}
                             </select>
-                            <p className="text-xs text-gray-500">For 'Income', select the user who paid. For 'Expense', leave empty if paid from cash box.</p>
+                            <p className="text-xs text-gray-500">Per a 'Ingrés', selecciona qui paga. Per a 'Despesa', deixa buit si s'ha pagat de la caixa.</p>
                         </div>
 
-                        <Button type="submit" className="w-full">Save Transaction</Button>
+                        <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold border-0">Guardar Transacció</Button>
                     </form>
                 </CardContent>
             </Card>

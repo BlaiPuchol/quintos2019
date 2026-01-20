@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "App dels Quintos 2019",
-  description: "Gestió del casal i comptes",
+  description: "Gestió del garito i comptes",
 };
 
 export default function RootLayout({

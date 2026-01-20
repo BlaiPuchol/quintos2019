@@ -22,6 +22,10 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
                 <CardContent>
                     <form action={signup} className="space-y-4">
                         <div className="space-y-2">
+                            <Label htmlFor="full_name" className="text-gray-200">Nom i Cognoms</Label>
+                            <Input id="full_name" name="full_name" type="text" placeholder="Ex: Vicent Giner" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
+                        </div>
+                        <div className="space-y-2">
                             <Label htmlFor="nickname" className="text-gray-200">Sobrenom (per a entrar)</Label>
                             <Input id="nickname" name="nickname" type="text" placeholder="Ex: Visantet" required className="bg-white/5 border-white/10 text-white placeholder:text-gray-500" />
                         </div>

@@ -10,6 +10,7 @@ export async function signup(formData: FormData) {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     const nickname = formData.get('nickname') as string
+    const full_name = formData.get('full_name') as string
 
     // 1. Sign up with Supabase Auth (using email/password)
     const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -17,7 +18,8 @@ export async function signup(formData: FormData) {
         password,
         options: {
             data: {
-                full_name: nickname, // Assuming nickname is the main name for now
+                full_name: full_name,
+                nickname: nickname,
             },
         },
     })
@@ -42,7 +44,7 @@ export async function signup(formData: FormData) {
             // Maybe redirect with warning? Or duplicate nickname error?
             // If duplicate nickname, we should probably check before signup... but for now let's just handle it.
             if (profileError.code === '23505') { // Unique violation
-                redirect('/register?error=Nickname ja existent. Tria en un altre.')
+                redirect('/register?error=El sobrenom ja existeix. Tria en un altre.')
             }
         }
     }

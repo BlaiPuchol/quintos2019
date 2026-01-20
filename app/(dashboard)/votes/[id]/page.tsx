@@ -63,54 +63,54 @@ export default async function VoteDetailPage({ params }: { params: { id: string 
     // UI
     return (
         <div className="pt-6">
-            <Card>
+            <Card className="bg-white/5 border-white/10 backdrop-blur-md text-white">
                 <CardHeader>
-                    <CardTitle>{vote.title}</CardTitle>
-                    <CardDescription>{vote.description}</CardDescription>
-                    <div className="text-xs text-gray-500 mt-1">
-                        {vote.is_anonymous ? 'Anonymous' : 'Public'} • {vote.status}
+                    <CardTitle className="text-xl font-bold">{vote.title}</CardTitle>
+                    <CardDescription className="text-gray-400">{vote.description}</CardDescription>
+                    <div className="text-xs text-gray-500 mt-1 flex items-center gap-2">
+                        <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider ${vote.is_anonymous ? 'bg-purple-900/40 text-purple-300' : 'bg-blue-900/40 text-blue-300'}`}>
+                            {vote.is_anonymous ? 'Anònima' : 'Pública'}
+                        </span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider ${vote.status === 'open' ? 'bg-green-900/40 text-green-300' : 'bg-red-900/40 text-red-300'}`}>
+                            {vote.status === 'open' ? 'Oberta' : 'Tancada'}
+                        </span>
                     </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
                     {!userVoted && vote.status === 'open' ? (
                         <div className="grid gap-3">
                             {vote.vote_options.map((opt: any) => (
                                 <form action={castVote.bind(null, vote.id, opt.id)} key={opt.id}>
-                                    <Button type="submit" variant="outline" className="w-full justify-start h-auto py-3 px-4">
+                                    <Button type="submit" variant="outline" className="w-full justify-start h-auto py-4 px-4 bg-white/5 border-white/10 hover:bg-white/10 text-white text-lg font-medium transition-all">
                                         {opt.label}
                                     </Button>
                                 </form>
                             ))}
                         </div>
                     ) : (
-                        <div className="space-y-4">
-                            <p className="font-semibold text-sm">Results</p>
-                            {/* 
-                           If Anon and strict RLS, we only see our vote.
-                           We need to warn user or fix RLS.
-                           For this MVP step, I will display what I can.
-                        */}
+                        <div className="space-y-6">
+                            <p className="font-semibold text-lg text-white">Resultats</p>
                             {vote.vote_options.map((opt: any) => {
                                 const count = allVotes?.filter((v: any) => v.option_id === opt.id).length || 0
                                 const total = allVotes?.length || 0
                                 const percent = total > 0 ? (count / total) * 100 : 0
 
                                 return (
-                                    <div key={opt.id} className="space-y-1">
-                                        <div className="flex justify-between text-sm">
-                                            <span>{opt.label}</span>
-                                            <span>{count} votes ({Math.round(percent)}%)</span>
+                                    <div key={opt.id} className="space-y-2">
+                                        <div className="flex justify-between text-sm items-end">
+                                            <span className="text-gray-200">{opt.label}</span>
+                                            <span className="text-gray-400 font-mono">{count} vots ({Math.round(percent)}%)</span>
                                         </div>
-                                        <Progress value={percent} className="h-2" />
+                                        <Progress value={percent} className="h-3 bg-white/10 [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                                     </div>
                                 )
                             })}
                             {vote.is_anonymous && (
-                                <p className="text-xs text-yellow-600 mt-2">
-                                    Note: Anonymous polls may hide global results until closed or update. (RLS Limitation in MVP)
+                                <p className="text-xs text-yellow-500/80 mt-4 p-2 bg-yellow-500/10 rounded border border-yellow-500/20">
+                                    Nota: Les votacions anònimes poden ocultar els detalls de qui ha votat.
                                 </p>
                             )}
-                            {userVoted && <p className="text-center text-sm text-green-600 mt-4">You have voted!</p>}
+                            {userVoted && <p className="text-center text-sm text-green-400 mt-4 bg-green-900/20 p-2 rounded border border-green-500/20">Has votat correctament!</p>}
                         </div>
                     )}
                 </CardContent>

@@ -17,7 +17,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <Card className="w-full max-w-md z-10 border-white/10 bg-black/50 backdrop-blur-md text-white">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold text-center">App dels Quintos</CardTitle>
-                    <CardDescription className="text-center text-gray-400">Inicieu sessió per gestionar el casal</CardDescription>
+                    <CardDescription className="text-center text-gray-400">Inicieu sessió per gestionar el garito</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form action={login} className="space-y-4">
